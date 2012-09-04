@@ -10,10 +10,10 @@ foreach(file($argv[1]) AS $line){
     $urlParts = parse_url($parts[0]);
 
     if($urlParts['query']){
-        $rule = "RewriteCond %{QUERY_STRING} ^" . $urlParts['query'] . "$\n".
-                "RewriteRule ^".ltrim($urlParts['path'],'/') . "$   " .trim($parts[1]) . "? [R=301,L]\n";
+        $rule = "RewriteCond %{QUERY_STRING} ^" . preg_quote($urlParts['query']) . "$\n".
+                "RewriteRule ^" . preg_quote(ltrim($urlParts['path'],'/')) . "$   " . trim($parts[1]) . "? [R=301,L]\n";
     } else{
-        $rule = "RewriteRule ^".ltrim($urlParts['path'],'/') . "$   " .trim($parts[1]) . "? [R=301,L]\n";
+        $rule = "RewriteRule ^" . preg_quote(ltrim($urlParts['path'],'/')) . "$   " . trim($parts[1]) . "? [R=301,L]\n";
     }
     $rules[] = $rule;
 }
